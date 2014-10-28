@@ -1,10 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include(PATH_THIRD.'popular/config.php');
+include_once(PATH_THIRD.'popular/config.php');
 
-require(PATH_THIRD.'popular/models/ip_location.php');
+require_once(PATH_THIRD.'popular/models/ip_location.php');
 
-require(PATH_THIRD.'popular/models/device_information.php');
+require_once(PATH_THIRD.'popular/models/device_information.php');
+
+require_once(PATH_THIRD.'popular/models/count_view.php');
 
 class Popular_ext {
 
@@ -16,7 +18,6 @@ class Popular_ext {
     public $settings       = array();
 
     private $hooks         = array();
-    private $site_id       = 1;
 
 	/**
 	* Constructor
@@ -27,8 +28,7 @@ class Popular_ext {
 
     public function __construct($settings='')
     {
-        $this->settings = $settings;
-        $this->site_id  = (int) ee()->config->item('site_id');  
+        $this->settings = $settings; 
     }
 
     /**
@@ -45,55 +45,7 @@ class Popular_ext {
         # if this is not a single entry or the channel is not allowed, return
         if( $row['total_results'] != '1' || !in_array($row['channel_id'], $this->settings['allowed_channel_ids']) ) return $tagdata; 
 
-        $referrer       = ( isset( $_SERVER['HTTP_REFERER'] ) ) ? $_SERVER['HTTP_REFERER'] : '';
-        $user_agent     = ee()->session->userdata('user_agent');
-        $remote_address = ee()->session->userdata('ip_address');
-        
-        
-
-        $ipv4 = ip2long($remote_address);
-        $ipv6 = inet_pton($remote_address);
-
-        $ipv4 = ( $ipv4 !== FALSE ) ? $ipv4 : NULL;
-        $ipv6 = ( $ipv4 === FALSE && $ipv6 !== FALSE ) ? $ipv6 : NULL;
-
-        $data = array(
-           'entry_id'  => $row['entry_id'],
-           'view_date' => date('Y-m-d H:i:s'),
-           'site_id'   => $this->site_id,
-           'ipv4'      => $ipv4,
-           'ipv6'      => $ipv6,
-           'device'    => $user_agent,
-           'uri'       => $row['page_uri']
-        );
-
-        if( $this->settings['find_ip_location'] === 'yes' && inet_pton($remote_address) !== FALSE ){
-
-            
-            $ip_location_model = new Ip_location($remote_address,$this->settings['find_ip_api_url']);
-        
-            $ip_location = $ip_location_model->get_location();
-
-            $data['country_code'] = ( $ip_location['country_code'] ) ? $ip_location['country_code'] : NULL;
-            $data['country_name'] = ( $ip_location['country_name'] ) ? $ip_location['country_name'] : NULL;
-            $data['region_code']  = ( $ip_location['region_code'] ) ? $ip_location['region_code'] : NULL;
-            $data['region_name']  = ( $ip_location['region_name'] ) ? $ip_location['region_name'] : NULL;
-            $data['city']         = ( $ip_location['city'] ) ? $ip_location['city'] : NULL;
-            $data['zipcode']      = ( $ip_location['zipcode'] ) ? $ip_location['zipcode'] : NULL;
-            $data['latitude']     = ( $ip_location['latitude'] ) ? $ip_location['latitude'] : NULL;
-            $data['longitude']    = ( $ip_location['longitude'] ) ? $ip_location['longitude'] : NULL;
-        }
-
-        if( $this->settings['improve_user_agent'] === 'yes' && $this->settings['user_agent_api_key'] != '' ){
-
-            $device_info_model = new Device_information($this->settings['user_agent_api_key'],$user_agent);
-        
-            $device_detail = $device_info_model->get_device_detail();
-
-            $data['device_simple'] = ( $device_detail['platform_type'] ) ? $device_detail['platform_type'] : NULL;
-        }
-
-        ee()->db->insert('popular',$data);
+        $count_view = new Count_view($row); 
 
         return $tagdata;
     }

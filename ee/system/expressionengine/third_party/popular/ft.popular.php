@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include(PATH_THIRD.'popular/config.php');
+include_once(PATH_THIRD.'popular/config.php');
 
-require(PATH_THIRD.'popular/models/view_count.php');
+require_once(PATH_THIRD.'popular/models/view_count.php');
 
 class Popular_ft extends EE_Fieldtype {
 
