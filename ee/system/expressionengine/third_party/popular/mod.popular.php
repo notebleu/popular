@@ -457,6 +457,7 @@ class Popular {
                 $prefix . 'year'         => $entry['year'],
                 $prefix . 'url_title'    => $entry['url_title'],
                 $prefix . 'title'        => $entry['title'],
+                $prefix . 'view_date'    => $entry['view_date'],
                 $prefix . 'device'       => $entry['device_simple'],
                 $prefix . 'user_agent'   => $entry['device'],
                 $prefix . 'ipv4'         => long2ip($entry['ipv4']),
