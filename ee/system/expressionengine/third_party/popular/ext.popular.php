@@ -90,7 +90,7 @@ class Popular_ext {
         ee()->load->library('api'); 
         ee()->api->instantiate('channel_structure');
         
-        $channels = ee()->api_channel_structure->get_channels($this->site_id);
+        $channels = ee()->api_channel_structure->get_channels(ee()->config->item('site_id'));
         
         $channel_array = array();
         foreach( $channels->result_array() as $channel )
