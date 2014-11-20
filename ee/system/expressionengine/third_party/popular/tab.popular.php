@@ -26,24 +26,28 @@ class Popular_tab {
         
         $extension_settings = $extension_model->get_settings();
         
-        if( in_array($channel_id, $extension_settings['allowed_channel_ids']) ){
- 
-    		$settings[] = array(
-    			'field_id'				=> 'highchart',
-    			'field_label'			=> lang('popular_tab_field_label'),
-    			'field_required' 		=> 'n',
-    			'field_data'			=> '',
-    			'field_list_items'		=> '',
-    			'field_fmt'				=> '',
-    			'field_instructions' 	=> '',
-    			'field_show_fmt'		=> 'n',
-    			'field_fmt_options'		=> array(),
-    			'field_text_direction'	=> 'ltr',
-    			'field_type' 			=> 'popular'
-    		); 
+        if( is_array($extension_settings['allowed_channel_ids']) ){
+            
+            if( in_array($channel_id, $extension_settings['allowed_channel_ids']) ){
+     
+        		$settings[] = array(
+        			'field_id'				=> 'highchart',
+        			'field_label'			=> lang('popular_tab_field_label'),
+        			'field_required' 		=> 'n',
+        			'field_data'			=> '',
+        			'field_list_items'		=> '',
+        			'field_fmt'				=> '',
+        			'field_instructions' 	=> '',
+        			'field_show_fmt'		=> 'n',
+        			'field_fmt_options'		=> array(),
+        			'field_text_direction'	=> 'ltr',
+        			'field_type' 			=> 'popular'
+        		); 
+                
+            }            
             
         }
-
+        
 		return $settings;        
     }
 
