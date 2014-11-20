@@ -46,7 +46,7 @@ class Count_view {
             $data['region_code']  = ( $ip_location['region_code'] ) ? $ip_location['region_code'] : NULL;
             $data['region_name']  = ( $ip_location['region_name'] ) ? $ip_location['region_name'] : NULL;
             $data['city']         = ( $ip_location['city'] ) ? $ip_location['city'] : NULL;
-            $data['zipcode']      = ( $ip_location['zipcode'] ) ? $ip_location['zipcode'] : NULL;
+            $data['zipcode']      = ( $ip_location['zip_code'] ) ? $ip_location['zip_code'] : NULL;
             $data['latitude']     = ( $ip_location['latitude'] ) ? $ip_location['latitude'] : NULL;
             $data['longitude']    = ( $ip_location['longitude'] ) ? $ip_location['longitude'] : NULL;
         }
