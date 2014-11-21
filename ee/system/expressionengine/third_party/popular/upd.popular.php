@@ -10,6 +10,8 @@ class Popular_upd {
     * @access public
     * @return bool
     */
+    
+    public $version = POPULAR_VERSION;
 
     public function install()
     {
@@ -125,9 +127,11 @@ class Popular_upd {
 
     public function update($current = '')
     {
-
         if ($current == $this->version){
             return FALSE;
+        } else {
+            ee()->db->where('module_name',POPULAR_NAME);
+            ee()->db->update('modules',array('module_version' => $this->version));
         }
 
     }

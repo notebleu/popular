@@ -14,7 +14,7 @@ if ( ! defined('POPULAR_NAME'))
 {
 	define('POPULAR_NAME',        'Popular');
 	define('POPULAR_PACKAGE',     'popular');
-	define('POPULAR_VERSION',     '1.1.3');
+	define('POPULAR_VERSION',     '1.2');
 	define('POPULAR_DOCS',        'https://notebleu.com/software/popular');
 	define('POPULAR_DEBUG',       FALSE);
     define('POPULAR_DESCRIPTION', 'An Add-On for advanced view counting');
