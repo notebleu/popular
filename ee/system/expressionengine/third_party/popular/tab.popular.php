@@ -50,6 +50,11 @@ class Popular_tab {
         
 		return $settings;        
     }
+    
+    public function validate_publish($params)
+    {
+        return FALSE;
+    }
 
 
 }
